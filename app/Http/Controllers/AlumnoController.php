@@ -11,7 +11,8 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-        //
+         $alumnos = \App\Models\Alumno::all();
+    return view('alumnos.index', compact('alumnos'));
     }
 
     /**
