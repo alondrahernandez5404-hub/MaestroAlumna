@@ -1,19 +1,16 @@
 @extends('components.layouts.app_alumnos')
 
 @section('content')
-<div class="container">
-    <h1>Detalles del Alumno</h1>
+  <h1>Detalles del Alumno</h1>
 
-    <ul>
-        <li><strong>ID:</strong> {{ $alumno->id }}</li>
-        <li><strong>Código:</strong> {{ $alumno->codigo }}</li>
-        <li><strong>Nombre:</strong> {{ $alumno->nombre }}</li>
-        <li><strong>Correo:</strong> {{ $alumno->correo }}</li>
-        <li><strong>Fecha de nacimiento:</strong> {{ $alumno->fecha_nacimiento }}</li>
-        <li><strong>Sexo:</strong> {{ $alumno->sexo }}</li>
-        <li><strong>Carrera:</strong> {{ $alumno->carrera }}</li>
-    </ul>
+  <p><strong>ID:</strong> {{ $alumno->id }}</p>
+  <p><strong>Código:</strong> {{ $alumno->codigo }}</p>
+  <p><strong>Nombre:</strong> {{ $alumno->nombre }}</p>
+  <p><strong>Correo:</strong> {{ $alumno->correo }}</p>
+  <p><strong>Fecha de Nacimiento:</strong> {{ $alumno->fecha_nacimiento }}</p>
+  <p><strong>Sexo:</strong> {{ $alumno->sexo }}</p>
+  <p><strong>Carrera:</strong> {{ $alumno->carrera }}</p>
 
-    <a href="{{ route('alumnos.index') }}" class="btn btn-secondary">Volver</a>
-</div>
+  <a href="{{ route('alumnos.index') }}">Volver a la lista</a>
 @endsection
+

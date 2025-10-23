@@ -1,41 +1,49 @@
 @extends('components.layouts.app_alumnos')
 
 @section('content')
-<div class="container">
-    <h1>Agregar Alumno</h1>
+  <h1>Agregar Alumno</h1>
 
-    <form action="{{ route('alumnos.store') }}" method="POST">
-        @csrf
-        <div class="mb-3">
-            <label>Código:</label>
-            <input type="text" name="codigo" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label>Nombre:</label>
-            <input type="text" name="nombre" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label>Correo:</label>
-            <input type="email" name="correo" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label>Fecha de nacimiento:</label>
-            <input type="date" name="fecha_nacimiento" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label>Sexo:</label>
-            <select name="sexo" class="form-control" required>
-                <option value="M">Masculino</option>
-                <option value="F">Femenino</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label>Carrera:</label>
-            <input type="text" name="carrera" class="form-control" required>
-        </div>
+  @if ($errors->any())
+    <div style="color:red; margin-bottom: 15px;">
+      <ul>
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+  @endif
 
-        <button type="submit" class="btn btn-success">Guardar</button>
-        <a href="{{ route('alumnos.index') }}" class="btn btn-secondary">Cancelar</a>
-    </form>
-</div>
+  <form action="{{ route('alumnos.store') }}" method="POST">
+    @csrf
+    <p>
+      <label>Código:</label><br>
+      <input type="text" name="codigo" value="{{ old('codigo') }}">
+    </p>
+    <p>
+      <label>Nombre:</label><br>
+      <input type="text" name="nombre" value="{{ old('nombre') }}">
+    </p>
+    <p>
+      <label>Correo:</label><br>
+      <input type="email" name="correo" value="{{ old('correo') }}">
+    </p>
+    <p>
+      <label>Fecha de Nacimiento:</label><br>
+      <input type="date" name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}">
+    </p>
+    <p>
+      <label>Sexo:</label><br>
+      <select name="sexo">
+        <option value="M" {{ old('sexo')=='M' ? 'selected' : '' }}>Masculino</option>
+        <option value="F" {{ old('sexo')=='F' ? 'selected' : '' }}>Femenino</option>
+      </select>
+    </p>
+    <p>
+      <label>Carrera:</label><br>
+      <input type="text" name="carrera" value="{{ old('carrera') }}">
+    </p>
+    <button type="submit" class="btn">Guardar</button>
+    <a href="{{ route('alumnos.index') }}" class="btn" style="background-color: gray;">Cancelar</a>
+  </form>
 @endsection
+

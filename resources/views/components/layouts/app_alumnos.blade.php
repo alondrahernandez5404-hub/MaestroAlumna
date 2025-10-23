@@ -9,6 +9,9 @@
     @if(session('success'))
       <div style="color:green">{{ session('success') }}</div>
     @endif
+<nav>
+    <a href="{{ route('alumnos.index') }}">Alumnos</a>
+</nav>
 
     @yield('content')
   </div>

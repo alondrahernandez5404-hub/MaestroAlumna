@@ -1,42 +1,50 @@
 @extends('components.layouts.app_alumnos')
 
 @section('content')
-<div class="container">
-    <h1>Editar Alumno</h1>
+  <h1>Editar Alumno</h1>
 
-    <form action="{{ route('alumnos.update', $alumno->id) }}" method="POST">
-        @csrf
-        @method('PUT')
-        <div class="mb-3">
-            <label>Código:</label>
-            <input type="text" name="codigo" value="{{ $alumno->codigo }}" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label>Nombre:</label>
-            <input type="text" name="nombre" value="{{ $alumno->nombre }}" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label>Correo:</label>
-            <input type="email" name="correo" value="{{ $alumno->correo }}" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label>Fecha de nacimiento:</label>
-            <input type="date" name="fecha_nacimiento" value="{{ $alumno->fecha_nacimiento }}" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label>Sexo:</label>
-            <select name="sexo" class="form-control" required>
-                <option value="M" {{ $alumno->sexo == 'M' ? 'selected' : '' }}>Masculino</option>
-                <option value="F" {{ $alumno->sexo == 'F' ? 'selected' : '' }}>Femenino</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label>Carrera:</label>
-            <input type="text" name="carrera" value="{{ $alumno->carrera }}" class="form-control" required>
-        </div>
+  @if ($errors->any())
+    <div style="color:red; margin-bottom: 15px;">
+      <ul>
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+  @endif
 
-        <button type="submit" class="btn btn-success">Actualizar</button>
-        <a href="{{ route('alumnos.index') }}" class="btn btn-secondary">Cancelar</a>
-    </form>
-</div>
+  <form action="{{ route('alumnos.update', $alumno->id) }}" method="POST">
+    @csrf
+    @method('PUT')
+    <p>
+      <label>Código:</label><br>
+      <input type="text" name="codigo" value="{{ old('codigo', $alumno->codigo) }}">
+    </p>
+    <p>
+      <label>Nombre:</label><br>
+      <input type="text" name="nombre" value="{{ old('nombre', $alumno->nombre) }}">
+    </p>
+    <p>
+      <label>Correo:</label><br>
+      <input type="email" name="correo" value="{{ old('correo', $alumno->correo) }}">
+    </p>
+    <p>
+      <label>Fecha de Nacimiento:</label><br>
+      <input type="date" name="fecha_nacimiento" value="{{ old('fecha_nacimiento', $alumno->fecha_nacimiento) }}">
+    </p>
+    <p>
+      <label>Sexo:</label><br>
+      <select name="sexo">
+        <option value="M" {{ $alumno->sexo=='M' ? 'selected' : '' }}>Masculino</option>
+        <option value="F" {{ $alumno->sexo=='F' ? 'selected' : '' }}>Femenino</option>
+      </select>
+    </p>
+    <p>
+      <label>Carrera:</label><br>
+      <input type="text" name="carrera" value="{{ old('carrera', $alumno->carrera) }}">
+    </p>
+    <button type="submit" class="btn">Actualizar</button>
+    <a href="{{ route('alumnos.index') }}" class="btn" style="background-color: gray;">Cancelar</a>
+  </form>
 @endsection
+
