@@ -14,21 +14,37 @@
       <div class="mb-3">
         <label class="form-label">Código</label>
         <input type="text" name="codigo" class="form-control" value="{{ $alumno->codigo }}" required>
+        @error('campo') 
+  <div class="text-danger small">{{ $message }}</div> 
+@enderror
+
       </div>
 
       <div class="mb-3">
         <label class="form-label">Nombre</label>
         <input type="text" name="nombre" class="form-control" value="{{ $alumno->nombre }}" required>
+        @error('campo') 
+  <div class="text-danger small">{{ $message }}</div> 
+@enderror
+
       </div>
 
       <div class="mb-3">
         <label class="form-label">Correo</label>
         <input type="email" name="correo" class="form-control" value="{{ $alumno->correo }}" required>
+        @error('campo') 
+  <div class="text-danger small">{{ $message }}</div> 
+@enderror
+
       </div>
 
       <div class="mb-3">
         <label class="form-label">Fecha de nacimiento</label>
         <input type="date" name="fecha_nacimiento" class="form-control" value="{{ $alumno->fecha_nacimiento }}">
+        @error('campo') 
+  <div class="text-danger small">{{ $message }}</div> 
+@enderror
+
       </div>
 
       <div class="mb-3">
@@ -43,6 +59,10 @@
       <div class="mb-3">
         <label class="form-label">Carrera</label>
         <input type="text" name="carrera" class="form-control" value="{{ $alumno->carrera }}">
+        @error('campo') 
+  <div class="text-danger small">{{ $message }}</div> 
+@enderror
+
       </div>
 
       <div class="text-end">
