@@ -1,50 +1,55 @@
 @extends('components.layouts.app_alumnos')
 
 @section('content')
-  <h1>Editar Alumno</h1>
+<div class="card shadow">
+  <div class="card-header bg-warning text-dark">
+    <h2>Editar Alumno</h2>
+  </div>
 
-  @if ($errors->any())
-    <div style="color:red; margin-bottom: 15px;">
-      <ul>
-        @foreach ($errors->all() as $error)
-          <li>{{ $error }}</li>
-        @endforeach
-      </ul>
-    </div>
-  @endif
+  <div class="card-body">
+    <form action="{{ route('alumnos.update', $alumno->id) }}" method="POST">
+      @csrf
+      @method('PUT')
 
-  <form action="{{ route('alumnos.update', $alumno->id) }}" method="POST">
-    @csrf
-    @method('PUT')
-    <p>
-      <label>Código:</label><br>
-      <input type="text" name="codigo" value="{{ old('codigo', $alumno->codigo) }}">
-    </p>
-    <p>
-      <label>Nombre:</label><br>
-      <input type="text" name="nombre" value="{{ old('nombre', $alumno->nombre) }}">
-    </p>
-    <p>
-      <label>Correo:</label><br>
-      <input type="email" name="correo" value="{{ old('correo', $alumno->correo) }}">
-    </p>
-    <p>
-      <label>Fecha de Nacimiento:</label><br>
-      <input type="date" name="fecha_nacimiento" value="{{ old('fecha_nacimiento', $alumno->fecha_nacimiento) }}">
-    </p>
-    <p>
-      <label>Sexo:</label><br>
-      <select name="sexo">
-        <option value="M" {{ $alumno->sexo=='M' ? 'selected' : '' }}>Masculino</option>
-        <option value="F" {{ $alumno->sexo=='F' ? 'selected' : '' }}>Femenino</option>
-      </select>
-    </p>
-    <p>
-      <label>Carrera:</label><br>
-      <input type="text" name="carrera" value="{{ old('carrera', $alumno->carrera) }}">
-    </p>
-    <button type="submit" class="btn">Actualizar</button>
-    <a href="{{ route('alumnos.index') }}" class="btn" style="background-color: gray;">Cancelar</a>
-  </form>
+      <div class="mb-3">
+        <label class="form-label">Código</label>
+        <input type="text" name="codigo" class="form-control" value="{{ $alumno->codigo }}" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        <input type="text" name="nombre" class="form-control" value="{{ $alumno->nombre }}" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Correo</label>
+        <input type="email" name="correo" class="form-control" value="{{ $alumno->correo }}" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Fecha de nacimiento</label>
+        <input type="date" name="fecha_nacimiento" class="form-control" value="{{ $alumno->fecha_nacimiento }}">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Sexo</label>
+        <select name="sexo" class="form-select">
+          <option value="">Seleccione...</option>
+          <option value="Femenino" {{ $alumno->sexo == 'Femenino' ? 'selected' : '' }}>Femenino</option>
+          <option value="Masculino" {{ $alumno->sexo == 'Masculino' ? 'selected' : '' }}>Masculino</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Carrera</label>
+        <input type="text" name="carrera" class="form-control" value="{{ $alumno->carrera }}">
+      </div>
+
+      <div class="text-end">
+        <a href="{{ route('alumnos.index') }}" class="btn btn-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-primary">Actualizar</button>
+      </div>
+    </form>
+  </div>
+</div>
 @endsection
-
