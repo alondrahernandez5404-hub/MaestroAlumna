@@ -3,17 +3,37 @@
 <head>
   <meta charset="utf-8">
   <title>Mi-Alumnos</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap JS Bundle (opcional, para componentes como modales) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container">
+      <a class="navbar-brand" href="{{ route('alumnos.index') }}">Mi-Alumnos</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('alumnos.index') }}">Lista de Alumnos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('alumnos.create') }}">Agregar Alumno</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
   <div class="container">
     @if(session('success'))
-      <div style="color:green">{{ session('success') }}</div>
+      <div class="alert alert-success">{{ session('success') }}</div>
     @endif
-<nav>
-    <a href="{{ route('alumnos.index') }}">Alumnos</a>
-</nav>
 
     @yield('content')
   </div>
 </body>
+
 </html>
