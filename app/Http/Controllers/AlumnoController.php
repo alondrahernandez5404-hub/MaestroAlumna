@@ -29,11 +29,12 @@ class AlumnoController extends Controller
         'carrera' => 'nullable|string|max:100',
     ]);
     $request->validate([
-        'codigo' => 'required',
-        'nombre' => 'required',
-        'correo' => 'required|email',
-        'fecha_nacimiento' => 'required|date|before_or_equal:' . now()->subYears(4)->toDateString(),
+    'codigo' => 'required',
+    'nombre' => 'required',
+    'correo' => 'required|email',
+    'fecha_nacimiento' => 'required|date|before_or_equal:' . now()->subYears(4)->toDateString(),
 ]);
+
 
     Alumno::create($request->all());
 
