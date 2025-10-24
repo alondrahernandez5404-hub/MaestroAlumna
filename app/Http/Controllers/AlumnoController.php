@@ -19,20 +19,21 @@ class AlumnoController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'codigo' => 'required',
-            'nombre' => 'required',
-            'correo' => 'required|email|unique:alumnos,correo',
-            'fecha_nacimiento' => 'required|date',
-            'sexo' => 'required|in:M,F',
-            'carrera' => 'required',
-        ]);
+{
+    $request->validate([
+        'codigo' => 'required|max:10|unique:alumnos,codigo',
+        'nombre' => 'required|string|max:100',
+        'correo' => 'required|email|unique:alumnos,correo',
+        'fecha_nacimiento' => 'nullable|date',
+        'sexo' => 'nullable|in:Femenino,Masculino',
+        'carrera' => 'nullable|string|max:100',
+    ]);
 
-        Alumno::create($request->all());
+    Alumno::create($request->all());
 
-        return redirect()->route('alumnos.index')->with('success', 'Alumno creado correctamente');
-    }
+    return redirect()->route('alumnos.index')->with('success', 'Alumno agregado correctamente.');
+}
+
 
     public function show(Alumno $alumno)
     {
@@ -45,20 +46,21 @@ class AlumnoController extends Controller
     }
 
     public function update(Request $request, Alumno $alumno)
-    {
-        $request->validate([
-            'codigo' => 'required',
-            'nombre' => 'required',
-            'correo' => 'required|email|unique:alumnos,correo,' . $alumno->id,
-            'fecha_nacimiento' => 'required|date',
-            'sexo' => 'required|in:M,F',
-            'carrera' => 'required',
-        ]);
+{
+    $request->validate([
+        'codigo' => 'required|max:10|unique:alumnos,codigo,' . $alumno->id,
+        'nombre' => 'required|string|max:100',
+        'correo' => 'required|email|unique:alumnos,correo,' . $alumno->id,
+        'fecha_nacimiento' => 'nullable|date',
+        'sexo' => 'nullable|in:Femenino,Masculino',
+        'carrera' => 'nullable|string|max:100',
+    ]);
 
-        $alumno->update($request->all());
+    $alumno->update($request->all());
 
-        return redirect()->route('alumnos.index')->with('success', 'Alumno actualizado correctamente');
-    }
+    return redirect()->route('alumnos.index')->with('success', 'Alumno actualizado correctamente.');
+}
+
 
     public function destroy(Alumno $alumno)
     {
