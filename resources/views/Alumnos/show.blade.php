@@ -1,8 +1,8 @@
 @extends('components.layouts.app_alumnos')
 
 @section('content')
-<div class="card shadow mt-4">
-  <div class="card-header bg-rose text-white">
+<div class="card shadow">
+  <div class="card-header bg-light-pink text-dark">
     <h2>Detalles del Alumno</h2>
   </div>
 
@@ -14,10 +14,24 @@
     <p><strong>Sexo:</strong> {{ $alumno->sexo }}</p>
     <p><strong>Carrera:</strong> {{ $alumno->carrera }}</p>
 
-    <div class="text-end mt-4">
-      <a href="{{ route('alumnos.index') }}" class="btn btn-secondary">⬅ Volver</a>
-      <a href="{{ route('alumnos.edit', $alumno->id) }}" class="btn btn-rose-dark">Editar 💫</a>
+    <hr>
+
+    <div class="d-flex justify-content-between">
+      <a href="{{ route('alumnos.index') }}" class="btn btn-secondary">Volver</a>
+      <button class="btn btn-primary" onclick="pedirContrasena()">Editar</button>
     </div>
   </div>
 </div>
+
+<script>
+function pedirContrasena() {
+  const pass = prompt("Introduce la contraseña para editar:");
+  if (pass === "123") {
+    window.location.href = "{{ route('alumnos.edit', $alumno->id) }}";
+  } else if (pass !== null) {
+    alert("Contraseña incorrecta. Serás redirigido al inicio.");
+    window.location.href = "{{ route('alumnos.index') }}";
+  }
+}
+</script>
 @endsection

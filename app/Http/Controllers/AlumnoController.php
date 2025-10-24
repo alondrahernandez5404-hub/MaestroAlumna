@@ -74,4 +74,18 @@ class AlumnoController extends Controller
         $alumno->delete();
         return redirect()->route('alumnos.index')->with('success', 'Alumno eliminado correctamente');
     }
+
+    public function deleteMultiple(Request $request)
+{
+    $ids = $request->ids;
+
+    if (!$ids) {
+        return redirect()->route('alumnos.index')->with('error', 'No seleccionaste ningún alumno.');
+    }
+
+    Alumno::whereIn('id', $ids)->delete();
+
+    return redirect()->route('alumnos.index')->with('success', 'Alumno(s) eliminado(s) correctamente.');
+}
+
 }

@@ -2,22 +2,26 @@
 
 @section('content')
 <div class="card shadow">
-  <div class="card-header d-flex justify-content-between align-items-center bg-pink-200">
-    <h2 class="text-dark fw-bold">Lista de Alumnos</h2>
+  <div class="card-header bg-pink-500 text-white d-flex justify-content-between align-items-center">
+    <h2>Lista de Alumnos</h2>
+
     <div>
       <a href="{{ route('alumnos.create') }}" class="btn btn-success me-2">+ Agregar Alumno</a>
-      <form action="{{ route('alumnos.deleteMultiple') }}" method="POST" style="display:inline;" id="deleteForm">
+
+      {{-- Botón eliminar múltiple --}}
+      <form id="deleteForm" action="{{ route('alumnos.deleteMultiple') }}" method="POST" class="d-inline">
         @csrf
         @method('DELETE')
-        <button type="submit" class="btn btn-danger">- Eliminar Alumno</button>
+        <input type="hidden" name="ids" id="selectedIds">
+        <button type="submit" id="deleteSelectedBtn" class="btn btn-danger" disabled>- Eliminar Alumno</button>
       </form>
     </div>
   </div>
 
   <div class="card-body">
-    <form id="selectForm">
-      <table class="table table-hover align-middle">
-        <thead class="table-warning">
+    <div class="table-responsive">
+      <table class="table table-striped align-middle">
+        <thead>
           <tr>
             <th><input type="checkbox" id="selectAll"></th>
             <th>No.</th>
@@ -26,36 +30,59 @@
             <th>Correo</th>
           </tr>
         </thead>
+
         <tbody>
-          @foreach ($alumnos as $alumno)
-          <tr onclick="window.location='{{ route('alumnos.show', $alumno->id) }}'" style="cursor:pointer;">
-            <td onclick="event.stopPropagation();">
-              <input type="checkbox" name="ids[]" value="{{ $alumno->id }}">
+          @foreach($alumnos as $alumno)
+          <tr>
+            <td><input type="checkbox" class="alumno-checkbox" value="{{ $alumno->id }}"></td>
+            <td>
+              <a href="{{ route('alumnos.show', $alumno->id) }}" class="text-decoration-none text-dark">
+                {{ $alumno->id }}
+              </a>
             </td>
-            <td>{{ $alumno->id }}</td>
-            <td>{{ $alumno->codigo }}</td>
-            <td>{{ $alumno->nombre }}</td>
-            <td>{{ $alumno->correo }}</td>
+            <td>
+              <a href="{{ route('alumnos.show', $alumno->id) }}" class="text-decoration-none text-dark">
+                {{ $alumno->codigo }}
+              </a>
+            </td>
+            <td>
+              <a href="{{ route('alumnos.show', $alumno->id) }}" class="text-decoration-none text-dark">
+                {{ $alumno->nombre }}
+              </a>
+            </td>
+            <td>
+              <a href="{{ route('alumnos.show', $alumno->id) }}" class="text-decoration-none text-dark">
+                {{ $alumno->correo }}
+              </a>
+            </td>
           </tr>
           @endforeach
         </tbody>
       </table>
-    </form>
+    </div>
   </div>
 </div>
 
+{{-- Script para habilitar/deshabilitar el botón --}}
 <script>
-  // ✅ "Seleccionar todo"
-  document.getElementById('selectAll').addEventListener('change', function() {
-    const checkboxes = document.querySelectorAll('input[name="ids[]"]');
-    checkboxes.forEach(ch => ch.checked = this.checked);
+  const selectAll = document.getElementById('selectAll');
+  const checkboxes = document.querySelectorAll('.alumno-checkbox');
+  const deleteBtn = document.getElementById('deleteSelectedBtn');
+  const selectedIdsInput = document.getElementById('selectedIds');
+
+  selectAll.addEventListener('change', () => {
+    checkboxes.forEach(cb => cb.checked = selectAll.checked);
+    toggleDeleteButton();
   });
 
-  // ✅ Confirmación al eliminar
-  document.getElementById('deleteForm').addEventListener('submit', function(event) {
-    if (!confirm('¿Seguro que deseas eliminar los alumnos seleccionados?')) {
-      event.preventDefault();
-    }
+  checkboxes.forEach(cb => {
+    cb.addEventListener('change', toggleDeleteButton);
   });
+
+  function toggleDeleteButton() {
+    const selected = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.value);
+    deleteBtn.disabled = selected.length === 0;
+    selectedIdsInput.value = selected.join(',');
+  }
 </script>
 @endsection
