@@ -92,10 +92,12 @@
   const deleteForm = document.getElementById('deleteForm');
   const selectedIdsInput = document.getElementById('selectedIds');
 
+  //  Seleccionar todo
   selectAll.addEventListener('change', function() {
     checkboxes.forEach(cb => cb.checked = selectAll.checked);
   });
 
+  //  Al intentar eliminar
   deleteForm.addEventListener('submit', function(e) {
     e.preventDefault();
     const selectedIds = Array.from(checkboxes)
@@ -113,19 +115,57 @@
 
     selectedIdsInput.value = selectedIds.join(',');
 
+    //  Primero pedimos la contraseña
     Swal.fire({
-      title: '¿Seguro que deseas eliminar los alumnos seleccionados?',
-      icon: 'warning',
+      title: 'Confirmar acción',
+      input: 'password',
+      inputLabel: 'Ingresa la contraseña para continuar',
+      inputPlaceholder: 'Contraseña...',
+      inputAttributes: {
+        autocapitalize: 'off',
+        autocorrect: 'off'
+      },
       showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Sí, eliminar',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.submit();
+      confirmButtonText: 'Verificar',
+      cancelButtonText: 'Cancelar',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'Debes ingresar una contraseña';
+        }
+      }
+    }).then((passwordResult) => {
+      if (passwordResult.isConfirmed) {
+        const password = passwordResult.value;
+
+        //  Verificamos la contraseña
+        if (password === '123') {
+          // Segundo paso: confirmación final
+          Swal.fire({
+            title: '¿Seguro que deseas eliminar los alumnos seleccionados?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              deleteForm.submit();
+            }
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Contraseña incorrecta',
+            text: 'Has sido redirigido a la lista de alumnos.',
+            confirmButtonText: 'Aceptar'
+          }).then(() => {
+            window.location.href = "{{ route('alumnos.index') }}";
+          });
+        }
       }
     });
   });
 </script>
+
 @endsection
