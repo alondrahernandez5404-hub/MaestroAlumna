@@ -1,0 +1,90 @@
+/* 🎀 Estilos personalizados rosa */
+
+/* Fondo principal y fuente */
+body {
+  background-color: #fff0f6;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Tarjetas */
+.card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 3px 10px rgba(255, 0, 128, 0.2);
+  overflow: hidden;
+}
+
+/* Encabezado de tarjeta */
+.card-header.bg-rose {
+  background-color: #f78fb3 !important; /* Rosa pastel */
+  color: white !important;
+  font-weight: 600;
+}
+
+/* Botones personalizados */
+.btn-rose {
+  background-color: #f78fb3 !important;
+  border-color: #f78fb3 !important;
+  color: white !important;
+  font-weight: 500;
+}
+
+.btn-rose:hover {
+  background-color: #ff47ba !important;
+  border-color: #ff47ba !important;
+}
+
+/* Rosa fuerte para editar */
+.btn-rose-dark {
+  background-color: #d63078 !important;
+  border-color: #d63078 !important;
+  color: white !important;
+}
+
+.btn-rose-dark:hover {
+  background-color: #b61b60 !important;
+}
+
+/* Rosa contorno para eliminar */
+.btn-outline-rose {
+  border: 2px solid #ff47ba !important;
+  color: #ff47ba !important;
+  font-weight: 500;
+}
+
+.btn-outline-rose:hover {
+  background-color: #ff47ba !important;
+  color: white !important;
+}
+
+/* Encabezados */
+h1, h2, h3 {
+  color: #d63078;
+  font-weight: 600;
+}
+
+/* Tablas */
+.table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table th {
+  background-color: #ffe6ef !important;
+  color: #d63078;
+  text-align: center;
+}
+
+.table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Links */
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  opacity: 0.8;
+}

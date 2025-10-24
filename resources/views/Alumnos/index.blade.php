@@ -38,13 +38,14 @@
           <td>{{ $alumno->sexo }}</td>
           <td>{{ $alumno->carrera }}</td>
           <td>
-            <a href="{{ route('alumnos.show', $alumno->id) }}" class="btn btn-info btn-sm">Ver</a>
-            <a href="{{ route('alumnos.edit', $alumno->id) }}" class="btn btn-warning btn-sm">Editar</a>
-            <form action="{{ route('alumnos.destroy', $alumno->id) }}" method="POST" class="d-inline">
-              @csrf
-              @method('DELETE')
-              <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar alumno?')">Eliminar</button>
-            </form>
+           <a href="{{ route('alumnos.show', $alumno->id) }}" class="btn btn-rose btn-sm">Ver</a>
+           <a href="{{ route('alumnos.edit', $alumno->id) }}" class="btn bg-rose-dark btn-sm">Editar</a>
+          <form action="{{ route('alumnos.destroy', $alumno->id) }}" method="POST" style="display:inline;">
+          @csrf
+          @method('DELETE')
+          <button type="submit" class="btn btn-outline-rose btn-sm text-rose">Eliminar</button>
+          </form>
+
           </td>
         </tr>
         @endforeach
