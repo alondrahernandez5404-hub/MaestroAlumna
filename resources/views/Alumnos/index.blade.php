@@ -9,6 +9,7 @@
       <a href="{{ route('alumnos.create') }}" class="btn btn-success">+ Agregar Alumno</a>
       <form id="deleteForm" action="{{ route('alumnos.deleteMultiple') }}" method="POST" class="d-inline">
         @csrf
+        @method('DELETE') 
         <input type="hidden" name="ids" id="selectedIds">
         <button type="submit" class="btn btn-danger">- Eliminar Alumno</button>
       </form>
@@ -29,11 +30,7 @@
       @foreach($alumnos as $alumno)
       <tr>
         <td><input type="checkbox" class="checkboxAlumno" value="{{ $alumno->id }}"></td>
-        <td>
-          <a href="{{ route('alumnos.show', $alumno->id) }}">
-            {{ $alumno->id }}
-          </a>
-        </td>
+        <td><a href="{{ route('alumnos.show', $alumno->id) }}">{{ $alumno->id }}</a></td>
         <td><a href="{{ route('alumnos.show', $alumno->id) }}">{{ $alumno->codigo }}</a></td>
         <td><a href="{{ route('alumnos.show', $alumno->id) }}">{{ $alumno->nombre }}</a></td>
         <td><a href="{{ route('alumnos.show', $alumno->id) }}">{{ $alumno->correo }}</a></td>
@@ -43,10 +40,25 @@
   </table>
 </div>
 
+<style>
+  
+  input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+
+  #selectAll {
+    transform: scale(0.8);
+    margin-right: 5px;
+  }
+</style>
+
 {{-- SweetAlert2 --}}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-{{-- Mensajes de éxito o error --}}
 @if(session('success'))
 <script>
   Swal.fire({
@@ -90,7 +102,7 @@
       .filter(cb => cb.checked)
       .map(cb => cb.value);
 
-    if(selectedIds.length === 0){
+    if (selectedIds.length === 0) {
       Swal.fire({
         icon: 'warning',
         title: 'Atención',

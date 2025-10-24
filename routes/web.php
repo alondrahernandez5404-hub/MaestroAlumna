@@ -10,7 +10,8 @@ use Laravel\Fortify\Features;
 use App\Http\Controllers\AlumnoController;
 
 Route::resource('alumnos', AlumnoController::class);
-Route::delete('/alumnos/delete-multiple', [AlumnoController::class, 'deleteMultiple'])->name('alumnos.deleteMultiple');
+Route::delete('alumnos/delete-multiple', [AlumnoController::class, 'deleteMultiple'])->name('alumnos.deleteMultiple');
+
 
 Route::get('/', function () {
     return view('welcome');
