@@ -1,9 +1,9 @@
 @extends('components.layouts.app_alumnos')
 
 @section('content')
-<div class="card shadow">
-  <div class="card-header bg-primary text-white">
-    <h2>Agregar Alumno</h2>
+<div class="card shadow mt-4">
+  <div class="card-header bg-rose text-white">
+    <h2>Agregar Alumno </h2>
   </div>
 
   <div class="card-body">
@@ -12,37 +12,28 @@
 
       <div class="mb-3">
         <label class="form-label">Código</label>
-        <input type="text" name="codigo" class="form-control" required>
-        @error('campo') 
-  <div class="text-danger small">{{ $message }}</div> 
-@enderror
-
+        <input type="text" name="codigo" class="form-control" placeholder="Ejemplo: A1234" required>
       </div>
 
       <div class="mb-3">
         <label class="form-label">Nombre</label>
-        <input type="text" name="nombre" class="form-control" required>
-        @error('campo') 
-  <div class="text-danger small">{{ $message }}</div> 
-@enderror
-
+        <input type="text" name="nombre" class="form-control" placeholder="Ejemplo: Alondra Hernández" required>
       </div>
 
       <div class="mb-3">
         <label class="form-label">Correo</label>
-        <input type="email" name="correo" class="form-control" required>
-        @error('campo') 
-  <div class="text-danger small">{{ $message }}</div> 
-@enderror
-
+        <input type="email" name="correo" class="form-control" placeholder="Ejemplo: alondra@email.com" required>
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Fecha de nacimiento</label>
-        <input type="date" name="fecha_nacimiento" class="form-control">
-        @error('campo') 
-  <div class="text-danger small">{{ $message }}</div> 
-@enderror
+        <label class="form-label">Fecha de Nacimiento</label>
+        <input 
+        type="date" 
+        name="fecha_nacimiento" 
+        class="form-control" 
+        max="{{ date('Y-m-d', strtotime('-4 years')) }}"
+        required
+>
 
       </div>
 
@@ -57,16 +48,12 @@
 
       <div class="mb-3">
         <label class="form-label">Carrera</label>
-        <input type="text" name="carrera" class="form-control">
-        @error('campo') 
-  <div class="text-danger small">{{ $message }}</div> 
-@enderror
-
+        <input type="text" name="carrera" class="form-control" placeholder="Ejemplo: Ingeniería en Sistemas">
       </div>
 
       <div class="text-end">
         <a href="{{ route('alumnos.index') }}" class="btn btn-secondary">Cancelar</a>
-        <button type="submit" class="btn btn-success">Guardar</button>
+        <button type="submit" class="btn btn-rose">Guardar 💾</button>
       </div>
     </form>
   </div>
