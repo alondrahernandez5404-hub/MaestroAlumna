@@ -9,7 +9,6 @@
       <a href="{{ route('alumnos.create') }}" class="btn btn-success">+ Agregar Alumno</a>
       <form id="deleteForm" action="{{ route('alumnos.deleteMultiple') }}" method="POST" class="d-inline">
         @csrf
-        @method('DELETE')
         <input type="hidden" name="ids" id="selectedIds">
         <button type="submit" class="btn btn-danger">- Eliminar Alumno</button>
       </form>
@@ -19,7 +18,11 @@
   <table class="table table-bordered table-hover">
     <thead class="table-dark">
       <tr>
-        <th><input type="checkbox" id="selectAll"> Seleccionar todo</th>
+        <th style="text-align:center;">
+          Seleccionar todo
+          <br>
+          <input type="checkbox" id="selectAll">
+        </th>
         <th>No.</th>
         <th>Código</th>
         <th>Nombre</th>
@@ -29,7 +32,9 @@
     <tbody>
       @foreach($alumnos as $alumno)
       <tr>
-        <td><input type="checkbox" class="checkboxAlumno" value="{{ $alumno->id }}"></td>
+        <td style="text-align:center;">
+          <input type="checkbox" class="checkboxAlumno" value="{{ $alumno->id }}">
+        </td>
         <td><a href="{{ route('alumnos.show', $alumno->id) }}">{{ $alumno->id }}</a></td>
         <td><a href="{{ route('alumnos.show', $alumno->id) }}">{{ $alumno->codigo }}</a></td>
         <td><a href="{{ route('alumnos.show', $alumno->id) }}">{{ $alumno->nombre }}</a></td>
@@ -41,19 +46,30 @@
 </div>
 
 <style>
-  /* Checkboxes más pequeños y discretos */
+  /* Checkboxes más pequeños */
   input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     margin: 0;
     vertical-align: middle;
     cursor: pointer;
   }
 
-  /* Checkbox de seleccionar todo más discreto */
+  /* Checkbox de seleccionar todo debajo del texto */
   #selectAll {
-    transform: scale(0.8);
-    margin-right: 5px;
+    display: block;
+    margin: 4px auto 0 auto;
+  }
+
+  /* Ajustar columna de checkboxes */
+  table td:first-child, table th:first-child {
+    width: 50px;
+    padding: 4px 6px;
+    vertical-align: middle;
+  }
+
+  table td, table th {
+    vertical-align: middle;
   }
 </style>
 
@@ -152,11 +168,11 @@
             cancelButtonText: 'Cancelar'
           }).then((result) => {
             if (result.isConfirmed) {
+              // Redirigir al index después de eliminar
               deleteForm.submit();
             }
           });
         } else {
-          // Contraseña incorrecta: redirigimos
           Swal.fire({
             icon: 'error',
             title: 'Contraseña incorrecta',
@@ -170,5 +186,4 @@
     });
   });
 </script>
-
 @endsection

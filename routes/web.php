@@ -13,7 +13,7 @@ use App\Http\Controllers\AlumnoController;
 Route::get('/', [AlumnoController::class, 'index'])->name('home');
 
 Route::resource('alumnos', AlumnoController::class);
-Route::delete('alumnos/delete-multiple', [AlumnoController::class, 'deleteMultiple'])->name('alumnos.deleteMultiple');
+Route::post('alumnos/delete-multiple', [AlumnoController::class, 'deleteMultiple'])->name('alumnos.deleteMultiple');
 
 // RUTAS DEL DASHBOARD Y CONFIGURACIÓN DE USUARIO
 Route::view('dashboard', 'dashboard')

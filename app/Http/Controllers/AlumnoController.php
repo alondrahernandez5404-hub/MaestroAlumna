@@ -74,7 +74,7 @@ class AlumnoController extends Controller
         return redirect()->route('alumnos.index')->with('success', 'Alumno eliminado correctamente');
     }
 
-    public function deleteMultiple(Request $request)
+   public function deleteMultiple(Request $request)
 {
     $ids = $request->ids;
 
@@ -82,10 +82,14 @@ class AlumnoController extends Controller
         return redirect()->route('alumnos.index')->with('error', 'No seleccionaste ningún alumno.');
     }
 
-    $idsArray = explode(',', $ids);
+    if (is_string($ids)) {
+        $ids = explode(',', $ids);
+    }
 
-    Alumno::whereIn('id', $idsArray)->delete();
+    Alumno::whereIn('id', $ids)->delete();
+
 
     return redirect()->route('alumnos.index')->with('success', 'Alumno(s) eliminado(s) correctamente.');
 }
+
 }
