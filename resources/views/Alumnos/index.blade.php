@@ -9,7 +9,7 @@
       <a href="{{ route('alumnos.create') }}" class="btn btn-success">+ Agregar Alumno</a>
       <form id="deleteForm" action="{{ route('alumnos.deleteMultiple') }}" method="POST" class="d-inline">
         @csrf
-        @method('DELETE') 
+        @method('DELETE')
         <input type="hidden" name="ids" id="selectedIds">
         <button type="submit" class="btn btn-danger">- Eliminar Alumno</button>
       </form>
@@ -41,7 +41,7 @@
 </div>
 
 <style>
-  
+  /* Checkboxes más pequeños y discretos */
   input[type="checkbox"] {
     width: 16px;
     height: 16px;
@@ -50,6 +50,7 @@
     cursor: pointer;
   }
 
+  /* Checkbox de seleccionar todo más discreto */
   #selectAll {
     transform: scale(0.8);
     margin-right: 5px;
@@ -59,6 +60,7 @@
 {{-- SweetAlert2 --}}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+{{-- Mensajes de éxito o error --}}
 @if(session('success'))
 <script>
   Swal.fire({
@@ -85,19 +87,19 @@
 </script>
 @endif
 
-{{-- Seleccionar todo y eliminar múltiple --}}
+{{-- Seleccionar todo y eliminar múltiple con contraseña --}}
 <script>
   const selectAll = document.getElementById('selectAll');
   const checkboxes = document.querySelectorAll('.checkboxAlumno');
   const deleteForm = document.getElementById('deleteForm');
   const selectedIdsInput = document.getElementById('selectedIds');
 
-  //  Seleccionar todo
+  // Seleccionar todo
   selectAll.addEventListener('change', function() {
     checkboxes.forEach(cb => cb.checked = selectAll.checked);
   });
 
-  //  Al intentar eliminar
+  // Al intentar eliminar
   deleteForm.addEventListener('submit', function(e) {
     e.preventDefault();
     const selectedIds = Array.from(checkboxes)
@@ -115,7 +117,7 @@
 
     selectedIdsInput.value = selectedIds.join(',');
 
-    //  Primero pedimos la contraseña
+    // Paso 1: pedimos la contraseña
     Swal.fire({
       title: 'Confirmar acción',
       input: 'password',
@@ -137,9 +139,9 @@
       if (passwordResult.isConfirmed) {
         const password = passwordResult.value;
 
-        //  Verificamos la contraseña
+        // Paso 2: verificamos la contraseña
         if (password === '123') {
-          // Segundo paso: confirmación final
+          // Paso 3: confirmación final antes de eliminar
           Swal.fire({
             title: '¿Seguro que deseas eliminar los alumnos seleccionados?',
             icon: 'warning',
@@ -154,6 +156,7 @@
             }
           });
         } else {
+          // Contraseña incorrecta: redirigimos
           Swal.fire({
             icon: 'error',
             title: 'Contraseña incorrecta',

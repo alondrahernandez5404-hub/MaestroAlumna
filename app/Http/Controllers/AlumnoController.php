@@ -68,7 +68,6 @@ class AlumnoController extends Controller
     return redirect()->route('alumnos.index')->with('success', 'Alumno actualizado correctamente.');
 }
 
-
     public function destroy(Alumno $alumno)
     {
         $alumno->delete();
@@ -83,9 +82,10 @@ class AlumnoController extends Controller
         return redirect()->route('alumnos.index')->with('error', 'No seleccionaste ningún alumno.');
     }
 
-    Alumno::whereIn('id', $ids)->delete();
+    $idsArray = explode(',', $ids);
+
+    Alumno::whereIn('id', $idsArray)->delete();
 
     return redirect()->route('alumnos.index')->with('success', 'Alumno(s) eliminado(s) correctamente.');
 }
-
 }

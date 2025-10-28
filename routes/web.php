@@ -9,14 +9,13 @@ use Laravel\Fortify\Features;
 
 use App\Http\Controllers\AlumnoController;
 
+// RUTAS PRINCIPALES DEL PROYECTO
+Route::get('/', [AlumnoController::class, 'index'])->name('home');
+
 Route::resource('alumnos', AlumnoController::class);
 Route::delete('alumnos/delete-multiple', [AlumnoController::class, 'deleteMultiple'])->name('alumnos.deleteMultiple');
 
-
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
-
+// RUTAS DEL DASHBOARD Y CONFIGURACIÓN DE USUARIO
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
