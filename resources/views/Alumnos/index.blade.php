@@ -9,6 +9,7 @@
       <a href="{{ route('alumnos.create') }}" class="btn btn-success">+ Agregar Alumno</a>
       <form id="deleteForm" action="{{ route('alumnos.deleteMultiple') }}" method="POST" class="d-inline">
         @csrf
+        @method('DELETE')
         <input type="hidden" name="ids" id="selectedIds">
         <button type="submit" class="btn btn-danger">- Eliminar Alumno</button>
       </form>
@@ -18,7 +19,7 @@
   <table class="table table-bordered table-hover">
     <thead class="table-dark">
       <tr>
-        <th style="text-align:center;">
+        <th>
           Seleccionar todo
           <br>
           <input type="checkbox" id="selectAll">
@@ -30,17 +31,19 @@
       </tr>
     </thead>
     <tbody>
-      @foreach($alumnos as $alumno)
+      @forelse($alumnos as $alumno)
       <tr>
-        <td style="text-align:center;">
-          <input type="checkbox" class="checkboxAlumno" value="{{ $alumno->id }}">
-        </td>
+        <td><input type="checkbox" class="checkboxAlumno" value="{{ $alumno->id }}"></td>
         <td><a href="{{ route('alumnos.show', $alumno->id) }}">{{ $alumno->id }}</a></td>
         <td><a href="{{ route('alumnos.show', $alumno->id) }}">{{ $alumno->codigo }}</a></td>
         <td><a href="{{ route('alumnos.show', $alumno->id) }}">{{ $alumno->nombre }}</a></td>
         <td><a href="{{ route('alumnos.show', $alumno->id) }}">{{ $alumno->correo }}</a></td>
       </tr>
-      @endforeach
+      @empty
+      <tr>
+        <td colspan="5" class="text-center text-muted">No hay alumnos registrados</td>
+      </tr>
+      @endforelse
     </tbody>
   </table>
 </div>
@@ -55,19 +58,20 @@
     cursor: pointer;
   }
 
-  /* Checkbox de seleccionar todo debajo del texto */
+  /* Ajuste específico para el checkbox de seleccionar todo */
   #selectAll {
     display: block;
-    margin: 4px auto 0 auto;
+    margin: 4px auto 0 auto; /* centrado y un poquito abajo del texto */
   }
 
-  /* Ajustar columna de checkboxes */
+  /* Ajustar la columna de los checkboxes */
   table td:first-child, table th:first-child {
-    width: 50px;
+    width: 50px;       
+    text-align: center;
     padding: 4px 6px;
-    vertical-align: middle;
   }
 
+  /* Mantener celdas alineadas verticalmente */
   table td, table th {
     vertical-align: middle;
   }
@@ -168,7 +172,6 @@
             cancelButtonText: 'Cancelar'
           }).then((result) => {
             if (result.isConfirmed) {
-              // Redirigir al index después de eliminar
               deleteForm.submit();
             }
           });
@@ -186,4 +189,5 @@
     });
   });
 </script>
+
 @endsection

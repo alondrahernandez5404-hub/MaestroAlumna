@@ -68,13 +68,19 @@ class AlumnoController extends Controller
     return redirect()->route('alumnos.index')->with('success', 'Alumno actualizado correctamente.');
 }
 
-    public function destroy(Alumno $alumno)
-    {
-        $alumno->delete();
-        return redirect()->route('alumnos.index')->with('success', 'Alumno eliminado correctamente');
+   public function destroy(Alumno $alumno)
+{
+    $alumno->delete();
+
+    // Reiniciar autoincremento si no hay registros
+    if (Alumno::count() == 0) {
+        \DB::statement('ALTER TABLE alumnos AUTO_INCREMENT = 1');
     }
 
-   public function deleteMultiple(Request $request)
+    return redirect()->route('alumnos.index')->with('success', 'Alumno eliminado correctamente');
+}
+
+public function deleteMultiple(Request $request)
 {
     $ids = $request->ids;
 
@@ -82,14 +88,15 @@ class AlumnoController extends Controller
         return redirect()->route('alumnos.index')->with('error', 'No seleccionaste ningún alumno.');
     }
 
-    if (is_string($ids)) {
-        $ids = explode(',', $ids);
-    }
-
     Alumno::whereIn('id', $ids)->delete();
 
+    // Reiniciar autoincremento si no hay registros
+    if (Alumno::count() == 0) {
+        \DB::statement('ALTER TABLE alumnos AUTO_INCREMENT = 1');
+    }
 
     return redirect()->route('alumnos.index')->with('success', 'Alumno(s) eliminado(s) correctamente.');
 }
+
 
 }
